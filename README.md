@@ -1,6 +1,8 @@
 Lousson: Logger
 ===============
 
+![Build Status](https://travis-ci.org/lousson/logger.png?branch=master)
+
 The `Lousson_Logger` package provides a set of facilities to create logger
 instances that are compatible with the PSR-3 specification.
 
