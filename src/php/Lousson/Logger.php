@@ -212,7 +212,7 @@ class Logger extends AbstractLogger
      *  The fetchString() method is used internally to convert the given
      *  $value into its string representation.
      *
-     *  @param  value               $value          The value to convert
+     *  @param  mixed               $value      The value to convert
      *
      *  @return string
      *          The $value's string representation is returned on success

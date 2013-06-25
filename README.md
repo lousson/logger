@@ -50,7 +50,7 @@ The complete sourcecode and version history is avialabe at GitHub.
 One may either visit http://github.com/lousson/logger or clone
 the source tree directly:
 
-	git clone git@github.com:lousson/logger.git
+	git clone https://github.com/lousson/logger.git
 
 GitHub is also used to track issues like bugs and feature-requests:
 
