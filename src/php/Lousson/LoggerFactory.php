@@ -214,7 +214,7 @@ class LoggerFactory
     private function createLoggerFromCallback($callback)
     {
         $callback = function($level, $message) use ($callback) {
-            $callback($level, $message);
+            call_user_func($callback, $level, $message);
         };
 
         $logger = new Logger($callback);
