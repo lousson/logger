@@ -88,9 +88,10 @@ class LoggerFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function getLoggerCallback()
     {
+        $cache = &self::$cache;
         $callback = function($level, $message) use (&$cache) {
-            LoggerFactoryTest::$level = $level;
-            LoggerFactoryTest::$message = $message;
+            $cache["level"] = $level;
+            $cache["message"] = $message;
         };
 
         return $callback;
@@ -132,8 +133,8 @@ class LoggerFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function setLoggerData($level, $message)
     {
-        self::$level = $level;
-        self::$message = $message;
+        self::$cache["level"] = $level;
+        self::$cache["message"] = $message;
     }
 
     /**
@@ -148,10 +149,13 @@ class LoggerFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function provideValidLoggerBases()
     {
-        $callback = function($message, $level) {
-            $level = LoggerFactoryTest::$logLevels[$level];
-            LoggerFactoryTest::$level = $level;
-            LoggerFactoryTest::$message = $message;
+        $cache = &self::$cache;
+        $levels = self::$logLevels;
+
+        $callback = function($message, $level) use (&$cache, $levels) {
+            $level = $levels[$level];
+            $cache["level"] = $level;
+            $cache["message"] = $message;
         };
 
         if (!class_exists("LogLousson")) {
@@ -316,8 +320,8 @@ class LoggerFactoryTest extends PHPUnit_Framework_TestCase
         foreach (self::$logLevels as $level) {
             $message = "$level#log#" . $i++;
             $logger->log($level, $message);
-            $this->assertEquals($level, self::$level, $message);
-            $this->assertEquals($message, self::$message);
+            $this->assertEquals($level, self::$cache["level"], $message);
+            $this->assertEquals($message, self::$cache["message"]);
         }
     }
 
@@ -344,8 +348,8 @@ class LoggerFactoryTest extends PHPUnit_Framework_TestCase
         foreach (self::$logLevels as $level) {
             $message = "$level#$level#" . $i++;
             $logger->$level($message);
-            $this->assertEquals($level, self::$level, $message);
-            $this->assertEquals($message, self::$message);
+            $this->assertEquals($level, self::$cache["level"], $message);
+            $this->assertEquals($message, self::$cache["message"]);
         }
     }
 
@@ -433,17 +437,10 @@ class LoggerFactoryTest extends PHPUnit_Framework_TestCase
     );
 
     /**
-     *  The last log level issued
+     *  The last log level and message issued
      *
-     *  @var string
+     *  @var array
      */
-    private static $level;
-
-    /**
-     *  The last log message issued
-     *
-     *  @var string
-     */
-    private static $message;
+    private static $cache = array();
 }
 
