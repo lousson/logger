@@ -73,7 +73,7 @@ ${contents}
       </package>
       <package>
         <name>Psr_Log</name>
-        <channel>pear.lousson.org</channel>
+        <channel>pear.quirkies.org</channel>
         <min>1.0.0</min>
       </package>
     </required>
